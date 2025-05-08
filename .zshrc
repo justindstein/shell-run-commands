@@ -2,10 +2,7 @@
 ## Path ##
 ##########
 
-# WC SAMPLE
-#  find . -name '*.java' | xargs -I {} cat {} | wc -l
-
-# $HOME/bin is amazon-recommended best-practice
+# $HOME/bin is amazon-recommended best-practice.
 export PATH=$HOME/bin:$PATH 
 export PATH=$HOME/bin/apache-maven-3.9.8/bin:$PATH
 
