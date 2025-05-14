@@ -2,8 +2,11 @@
 ## Path ##
 ##########
 
-# $HOME/bin is amazon-recommended best-practice.
-export PATH=$HOME/bin:$PATH 
+# WC SAMPLE
+#  find . -name '*.java' | xargs -I {} cat {} | wc -l
+
+# $HOME/bin is amazon-recommended best-practice
+export PATH=$HOME/bin:$PATH
 export PATH=$HOME/bin/apache-maven-3.9.8/bin:$PATH
 
 ###########################
@@ -107,6 +110,7 @@ alias trunk='cd ~/dev/trunk'
 alias bin='cd ~/bin/'
 alias tmp='cd ~/tmp/'
 alias app='cd ~/app/'
+alias ws='cd ~/dev/workflow-service'
 
 alias ~='cd ~'
 alias .='cd ..'
@@ -117,6 +121,20 @@ alias .....='cd ..; cd ..; cd ..; cd ..; cd ..'
 alias ......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 alias .......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 
+########################
+## WSL Customizations ##
+########################
+
+# Check if running on WSL 2 and set up port forwarding
+# function brdconfig() {
+# if grep -q "Microsoft" /proc/version; then
+#  ip=$(hostname -I | awk '{print $1}')
+#  if [[ -n "$ip" ]]; then
+#    powershell.exe -Command "netsh interface portproxy set v4tov4 listenport=1433 listenaddress=127.0.0.1 connectport=1433 connectaddress=$ip"
+#  fi
+#fi
+#}
+
 ######################
 ## Disable zsh beep ##
 ######################
@@ -126,5 +144,3 @@ alias .......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 # unsetopt BEEP
 # Turn off autocomplete beeps
 # unsetopt LIST_BEEP
-
-
