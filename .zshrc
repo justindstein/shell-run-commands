@@ -2,9 +2,6 @@
 ## Path ##
 ##########
 
-# WC SAMPLE
-#  find . -name '*.java' | xargs -I {} cat {} | wc -l
-
 # $HOME/bin is amazon-recommended best-practice
 export PATH=$HOME/bin:$PATH
 export PATH=$HOME/bin/apache-maven-3.9.8/bin:$PATH
@@ -46,12 +43,6 @@ alias ng='ngrok http host.docker.internal:8080'
 ###################
 ## Shell aliases ##
 ###################
-
-# Open a file or folder in Windows File Explorer from WSL using explorer.exe.
-# Example: o ./README.md — this will open the file in the default Windows app.
-o() {
-  explorer.exe "$1"
-}
 
 # Recursive grep that ignores binary files and suppresses error output.
 # Example: gr pattern — searches all files in the current directory tree.
@@ -124,6 +115,16 @@ alias .......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 ########################
 ## WSL Customizations ##
 ########################
+
+# Open a file or folder in Windows File Explorer from WSL using explorer.exe.
+# Example: o ./README.md — this will open the file in the default Windows app.
+o() {
+  if [ -z "$1" ]; then
+    explorer.exe .
+  else
+    explorer.exe "$(wslpath -w "$1")"
+  fi
+}
 
 # Check if running on WSL 2 and set up port forwarding
 # function brdconfig() {
