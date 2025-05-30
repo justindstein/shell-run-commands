@@ -2,8 +2,11 @@
 ## Path ##
 ##########
 
+# WC SAMPLE
+#  find . -name '*.java' | xargs -I {} cat {} | wc -l
+
 # $HOME/bin is amazon-recommended best-practice
-export PATH=$HOME/bin:$PATH
+export PATH=$HOME/bin:$PATH 
 export PATH=$HOME/bin/apache-maven-3.9.8/bin:$PATH
 
 ###########################
@@ -11,8 +14,18 @@ export PATH=$HOME/bin/apache-maven-3.9.8/bin:$PATH
 ###########################
 
 # JDK
-export JAVA_HOME=$HOME/bin/jdk8u412-b08
+export JAVA_HOME=$HOME/bin/temurin-17.0.15+6
+#export JAVA_HOME=$HOME/bin/jdk8u412-b08
 export PATH=$JAVA_HOME/bin:$PATH
+
+export NGROK_URL=severely-curious-rooster.ngrok-free.app
+
+###########
+## WSL 2 ##
+###########
+
+# Windows host IP address per https://pscheit.medium.com/get-the-ip-address-of-the-desktop-windows-host-in-wsl2-7dc61653ad51
+export WINDOWS_IP=$(ipconfig.exe | grep 'vEthernet (WSL)' -A4 | cut -d":" -f 2 | tail -n1 | sed -e 's/\s*//g')
 
 ####################
 ## Command prompt ##
@@ -38,11 +51,25 @@ alias h='history'
 alias gitdiff='git diff --staged > ~/desktop/my.diff'
 alias mci='mvn clean install'
 alias gst='git status | gstrip'
-alias ng='ngrok http host.docker.internal:8080'
+
+# Local to WSL only
+alias ng="ngrok http --url=\$NGROK_URL 8080"
+# Pipes to Windows only
+alias ngw="ngrok http --url=\$NGROK_URL \$WINDOWS_IP:8080"
 
 ###################
 ## Shell aliases ##
 ###################
+
+# Open a file or folder in Windows File Explorer from WSL using explorer.exe.
+# Example: o ./README.md — this will open the file in the default Windows app.
+o() {
+  if [ -z "$1" ]; then
+    explorer.exe .
+  else
+    explorer.exe "$(wslpath -w "$1")"
+  fi
+}
 
 # Recursive grep that ignores binary files and suppresses error output.
 # Example: gr pattern — searches all files in the current directory tree.
@@ -112,30 +139,6 @@ alias .....='cd ..; cd ..; cd ..; cd ..; cd ..'
 alias ......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 alias .......='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 
-########################
-## WSL Customizations ##
-########################
-
-# Open a file or folder in Windows File Explorer from WSL using explorer.exe.
-# Example: o ./README.md — this will open the file in the default Windows app.
-o() {
-  if [ -z "$1" ]; then
-    explorer.exe .
-  else
-    explorer.exe "$(wslpath -w "$1")"
-  fi
-}
-
-# Check if running on WSL 2 and set up port forwarding
-# function brdconfig() {
-# if grep -q "Microsoft" /proc/version; then
-#  ip=$(hostname -I | awk '{print $1}')
-#  if [[ -n "$ip" ]]; then
-#    powershell.exe -Command "netsh interface portproxy set v4tov4 listenport=1433 listenaddress=127.0.0.1 connectport=1433 connectaddress=$ip"
-#  fi
-#fi
-#}
-
 ######################
 ## Disable zsh beep ##
 ######################
@@ -145,3 +148,5 @@ o() {
 # unsetopt BEEP
 # Turn off autocomplete beeps
 # unsetopt LIST_BEEP
+
+
